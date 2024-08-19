@@ -61,7 +61,7 @@ def main():
     ]
     download_files(file_urls)
 
-    file_list = ["TheIndex.py", "000-Example.py", "000-Example.txt"], "extremelysupersecretvideo.mp4"]
+    file_list = ["TheIndex.py", "000-Example.py", "000-Example.txt", "extremelysupersecretvideo.mp4"]
     move_files(file_list, target_dir)
 
     copy_file_to_current_dir(os.path.join(target_dir, "TheIndex.py"))
