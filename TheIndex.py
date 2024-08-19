@@ -3,6 +3,7 @@ import os
 from os import system
 import sys
 import urllib.request
+os.remove("TheConsoleGame-Installer.py") 
 system("title " + "The Console Game")
 
 
