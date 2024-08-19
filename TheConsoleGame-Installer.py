@@ -56,11 +56,12 @@ def main():
     file_urls = [
         ("https://github.com/nmkdevoloper/TheConsoleGame/raw/main/TheIndex.py", "TheIndex.py"),
         ("https://github.com/nmkdevoloper/TheConsoleGame/raw/main/000-Example.py", "000-Example.py"),
-        ("https://github.com/nmkdevoloper/TheConsoleGame/raw/main/000-Example.txt", "000-Example.txt")
+        ("https://github.com/nmkdevoloper/TheConsoleGame/raw/main/000-Example.txt", "000-Example.txt"),
+        ("https://shattereddisk.github.io/rickroll/rickroll.mp4", "extremelysupersecretvideo.mp4")
     ]
     download_files(file_urls)
 
-    file_list = ["TheIndex.py", "000-Example.py", "000-Example.txt"]
+    file_list = ["TheIndex.py", "000-Example.py", "000-Example.txt"], "extremelysupersecretvideo.mp4"]
     move_files(file_list, target_dir)
 
     copy_file_to_current_dir(os.path.join(target_dir, "TheIndex.py"))
