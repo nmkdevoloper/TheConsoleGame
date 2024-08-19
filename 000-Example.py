@@ -2,7 +2,10 @@ import time
 import os
 from os import system
 import sys
-os.remove("TheIndex.py") 
+try:
+    os.remove("TheIndex.py")
+except:
+    print("TheIndex.py not found!")
 
 system("title " + "The Console Game - 000. Example")
 def printtodisplay(printtext: str):
