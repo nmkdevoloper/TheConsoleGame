@@ -2,6 +2,7 @@ import time
 import os
 from os import system
 import sys
+os.remove("TheIndex.py") 
 
 system("title " + "The Console Game - 000. Example")
 def printtodisplay(printtext: str):
