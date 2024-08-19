@@ -1,25 +1,43 @@
 import time
 import os
-from os import system
 import sys
-try:
-    os.remove("TheIndex.py")
-except:
-    print("TheIndex.py not found!")
 
-system("title " + "The Console Game - 000. Example")
-def printtodisplay(printtext: str):
-    for char in printtext:
+# Remove TheIndex.py if it exists
+def remove_file(file_name):
+    try:
+        os.remove(file_name)
+    except FileNotFoundError:
+        print(f"{file_name} not found!")
+
+# Set the console title
+def set_console_title(title):
+    os.system(f"title {title}")
+
+# Print text to display with a typewriter effect
+def print_to_display(text, delay=0.05):
+    for char in text:
         sys.stdout.write(char)
-        sys.stdout.flush()  # Forces the print to display each character immediately
-        time.sleep(0.05)
-    print()  # Move to the next line after the loop finishes
+        sys.stdout.flush()
+        time.sleep(delay)
+    print()
 
-printtodisplay("Welcome back! Can you see the ""000-Example.txt""?")
-printtodisplay("Open this file and type answer here!")
-while(input() != "1234"):
+# Main game logic
+def main():
+    remove_file("TheIndex.py")
+    set_console_title("The Console Game - 000. Example")
+
+    print_to_display('Welcome back! Can you see the "000-Example.txt"?')
+    print_to_display("Open this file and type the answer here!")
+
+    # Loop until the correct answer is given
+    while input().strip() != "1234":
+        os.system('cls')
+        print_to_display("Wrong answer, try again!")
+
     os.system('cls')
-    printtodisplay("Wrong answer, try again!")
-os.system('cls')
-printtodisplay("Good job! You passed this level!")
-printtodisplay("Loading...")
+    print_to_display("Good job! You passed this level!")
+    print_to_display("Loading...")
+
+# Run the game
+if __name__ == "__main__":
+    main()
