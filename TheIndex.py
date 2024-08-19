@@ -3,7 +3,10 @@ import os
 from os import system
 import sys
 import urllib.request
-os.remove("TheConsoleGame-Installer.py") 
+try:
+    os.remove("TheConsoleGame-Installer.py")
+except:
+    print("TheConsoleGame-Installer.py not found!")
 system("title " + "The Console Game")
 
 
@@ -20,8 +23,13 @@ printtodisplay("Press [Enter] to continue!")
 enter = input()
 os.system('cls')
 printtodisplay("In this game, you need find the answer with hints given!")
-printtodisplay("Type ""yes"" to continue or ""no"" to close!")
-choice = str(input())
+while True:
+    printtodisplay("Type ""yes"" to continue or ""no"" to close!")
+    choice = str(input())
+    if choice != 'yes' and choice != 'no':
+        os.system('cls')
+    else:
+        break
 if choice == 'yes':
     os.system('cls')
     printtodisplay("Loading...")
