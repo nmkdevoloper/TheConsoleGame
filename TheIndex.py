@@ -7,28 +7,39 @@ from ffpyplayer.player import MediaPlayer
 
 # Constants
 VIDEO_PATH = "Data (Do not touch if you do not want to skip the level)/troll.mp4"
-VIDEO_PLAY_DURATION = 10  # Play video for 10 seconds
 
-def play_video(video_path, duration=VIDEO_PLAY_DURATION):
+def play_video(video_path):
     video = cv2.VideoCapture(video_path)
     player = MediaPlayer(video_path)
-    start_time = time.time()
+    
+    # Create a maximized window
+    cv2.namedWindow("Video", cv2.WND_PROP_TOPMOST)
+    cv2.setWindowProperty("Video", cv2.WND_PROP_TOPMOST, 1)
+    cv2.setWindowProperty("Video", cv2.WND_PROP_FULLSCREEN, cv2.WINDOW_NORMAL)
+    cv2.setWindowProperty("Video", cv2.WND_PROP_ASPECT_RATIO, cv2.WINDOW_FREERATIO)
+    cv2.setWindowProperty("Video", cv2.WND_PROP_AUTOSIZE, 0)
 
-    # Create a full-screen window
-    cv2.namedWindow("Video", cv2.WND_PROP_FULLSCREEN)
-    cv2.setWindowProperty("Video", cv2.WND_PROP_FULLSCREEN, cv2.WINDOW_FULLSCREEN)
+    # Set the window size to be maximized
+    screen_width = cv2.getWindowImageRect("Video")[2]
+    screen_height = cv2.getWindowImageRect("Video")[3]
+    cv2.resizeWindow("Video", screen_width, screen_height)
 
     while True:
         grabbed, frame = video.read()
         audio_frame, val = player.get_frame()
 
-        if not grabbed or (time.time() - start_time) > duration:
+        if not grabbed:
             break
 
+        # Resize frame to fit the window while maintaining aspect ratio
+        frame = cv2.resize(frame, (screen_width, screen_height), interpolation=cv2.INTER_LINEAR)
 
         cv2.imshow("Video", frame)
         if val != 'eof' and audio_frame is not None:
             img, t = audio_frame  # Synchronize audio with video
+
+        if cv2.waitKey(1) & 0xFF == ord('q'):
+            break
 
     video.release()
     cv2.destroyAllWindows()
