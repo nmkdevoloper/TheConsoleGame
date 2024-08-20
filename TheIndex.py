@@ -6,7 +6,7 @@ import cv2
 from ffpyplayer.player import MediaPlayer
 
 # Constants
-VIDEO_PATH = "Data (Do not touch if you do not want to skip the level)/extremelysupersecretvideo.mp4"
+VIDEO_PATH = "Data (Do not touch if you do not want to skip the level)/troll.mp4"
 VIDEO_PLAY_DURATION = 10  # Play video for 10 seconds
 
 def play_video(video_path, duration=VIDEO_PLAY_DURATION):
