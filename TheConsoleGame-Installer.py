@@ -74,7 +74,7 @@ def main():
         ("https://github.com/nmkdevoloper/TheConsoleGame/raw/main/TheIndex.py", "TheIndex.py"),
         ("https://github.com/nmkdevoloper/TheConsoleGame/raw/main/000-Example.py", "000-Example.py"),
         ("https://github.com/nmkdevoloper/TheConsoleGame/raw/main/000-Example.txt", "000-Example.txt"),
-        ("https://shattereddisk.github.io/rickroll/rickroll.mp4", "troll.mp4")
+        ("https://github.com/nmkdevoloper/TheConsoleGame/raw/main/troll.mp4", "troll.mp4")
     ]
     download_files(file_urls)
 
