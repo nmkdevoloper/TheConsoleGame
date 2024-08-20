@@ -2,7 +2,6 @@ import requests
 import time
 import os
 import shutil
-from tqdm import tqdm
 
 # Set the console title
 def set_console_title(title):
@@ -12,30 +11,26 @@ def set_console_title(title):
 def create_directory(path):
     os.makedirs(path, exist_ok=True)
 
-# Download a list of files with progress display
+# Download a list of files
 def download_files(file_urls):
     for url, filename in file_urls:
         try:
             print(f"Downloading {filename}...")
-            response = requests.get(url, stream=True)
-            response.raise_for_status()  # Check for HTTP errors
-
-            total_size = int(response.headers.get('content-length', 0))
-            block_size = 1024  # 1 Kibibyte
-            progress_bar = tqdm(total=total_size, unit='iB', unit_scale=True)
-
-            with open(filename, 'wb') as file:
-                for data in response.iter_content(block_size):
-                    progress_bar.update(len(data))
-                    file.write(data)
-            progress_bar.close()
-
-            if total_size != 0 and progress_bar.n != total_size:
-                print("Error! Something went wrong during the download.")
-                time.sleep(3)
-                exit()
-        except requests.exceptions.RequestException as e:
-            print(f"Error! Failed to download {filename}: {e}")
+            with requests.get(url, stream=True) as response:
+                response.raise_for_status()
+                total_downloaded = 0
+                with open(filename, 'wb') as file:
+                    for chunk in response.iter_content(chunk_size=8192):
+                        if chunk:  # filter out keep-alive new chunks
+                            file.write(chunk)
+                            total_downloaded += len(chunk)
+                            if total_downloaded < 1024 * 1024:  # Less than 1024 KB
+                                print(f"\r{total_downloaded / 1024:.2f} KB downloaded", end="")
+                            else:
+                                print(f"\r{total_downloaded / (1024 * 1024):.2f} MB downloaded", end="")
+            print()  # Move to the next line after download is complete
+        except Exception as e:
+            print(f"\nError! Failed to download {filename}. Please check your internet connection and permissions.")
             time.sleep(3)
             exit()
 
@@ -44,7 +39,7 @@ def move_files(file_list, target_dir):
     for filename in file_list:
         try:
             shutil.move(filename, os.path.join(target_dir, filename))
-        except shutil.Error:
+        except:
             print(f"Error! Cannot move {filename}. Please remove the old folder before running this installer!")
             time.sleep(3)
             exit()
@@ -53,7 +48,7 @@ def move_files(file_list, target_dir):
 def copy_file_to_current_dir(src_path):
     try:
         shutil.copy2(src_path, ".")
-    except shutil.Error:
+    except:
         print(f"Error! Unable to copy {src_path} back to the current directory.")
         time.sleep(3)
         exit()
